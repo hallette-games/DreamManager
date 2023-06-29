@@ -1,0 +1,16 @@
+[package]
+name = "hello"
+version = "0.1.0"
+authors = ["Douile <25043847+Douile@users.noreply.github.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "test"
+path = "src/main.rs"
+
+[[bin]]
+name = "test2"
+path = "src/main.rs"
+
+[dependencies]
