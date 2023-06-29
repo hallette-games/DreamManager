@@ -15,7 +15,7 @@ jobs:
             archive: zip
     steps:
       - uses: actions/checkout@master
-      - name: Compile and release
+      - name: Compile
         uses: rust-build/rust-build.action@master
         with:
           RUSTTARGET: ${{ matrix.target }}
@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target
+          path: target/${{ matrix.target }}/deps/
           
   build-linux:
     name: Build ${{ matrix.target }}
@@ -37,7 +37,7 @@ jobs:
             archive: zip
     steps:
       - uses: actions/checkout@master
-      - name: Compile and release
+      - name: Compile
         uses: rust-build/rust-build.action@master
         with:
           RUSTTARGET: ${{ matrix.target }}
@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target
+          path: target/${{ matrix.target }}/deps/
           
   build-osx:
     name: Build ${{ matrix.target }}
@@ -59,7 +59,7 @@ jobs:
             archive: zip
     steps:
       - uses: actions/checkout@master
-      - name: Compile and release
+      - name: Compile
         uses: rust-build/rust-build.action@master
         with:
           RUSTTARGET: ${{ matrix.target }}
@@ -68,4 +68,25 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target
+          path: target/${{ matrix.target }}/deps/
+  build-wasm:
+    name: Build ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - target: wasm32-wasi
+            archive: zip
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile
+        uses: rust-build/rust-build.action@master
+        with:
+          RUSTTARGET: ${{ matrix.target }}
+          UPLOAD_MODE: none
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary ${{ matrix.target }}
+          path: target/${{ matrix.target }}/deps/
