@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target/${{ matrix.target }}/deps/
+          path: target/${{ matrix.target }}/release/deps/
           
   build-linux:
     name: Build ${{ matrix.target }}
@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target/${{ matrix.target }}/deps/
+          path: target/${{ matrix.target }}/release/deps/
           
   build-osx:
     name: Build ${{ matrix.target }}
@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target/${{ matrix.target }}/deps/
+          path: target/${{ matrix.target }}/release/deps/
   build-wasm:
     name: Build ${{ matrix.target }}
     runs-on: ubuntu-latest
@@ -89,4 +89,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Binary ${{ matrix.target }}
-          path: target/${{ matrix.target }}/deps/
+          path: target/${{ matrix.target }}/release/
