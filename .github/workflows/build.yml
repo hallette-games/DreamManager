@@ -4,7 +4,7 @@ name: Build
 
 
 jobs:
-  build:
+  build-win32:
     name: Build ${{ matrix.target }}
     runs-on: ubuntu-latest
     strategy:
@@ -12,10 +12,6 @@ jobs:
       matrix:
         include:
           - target: x86_64-pc-windows-gnu
-            archive: zip
-          - target: x86_64-unknown-linux-musl
-            archive: zip
-          - target: x86_64-apple-darwin
             archive: zip
     steps:
       - uses: actions/checkout@master
@@ -27,7 +23,49 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Binary
-          path: |
-            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
-            ${{ steps.compile.outputs.BUILT_CHECKSUM }}
+          name: Binary ${{ matrix.target }}
+          path: target
+          
+  build-linux:
+    name: Build ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            archive: zip
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@master
+        with:
+          RUSTTARGET: ${{ matrix.target }}
+          UPLOAD_MODE: none
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary ${{ matrix.target }}
+          path: target
+          
+  build-osx:
+    name: Build ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            archive: zip
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@master
+        with:
+          RUSTTARGET: ${{ matrix.target }}
+          UPLOAD_MODE: none
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary ${{ matrix.target }}
+          path: target
