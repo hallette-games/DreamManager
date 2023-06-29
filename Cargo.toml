@@ -2,11 +2,12 @@
 name = "DreamManager"
 version = "0.1.0"
 authors = ["lxchn1v1 <flat.assembly@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [[bin]]
-name = "dreammanager"
+name = "DreamManager"
 path = "src/main.rs"
 
 [dependencies]
+tauri = "*"
